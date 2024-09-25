@@ -5,7 +5,7 @@ export default function Footer() {
     return (
         <footer className={styles.footer}>
             <Container>
-                <span>itcolleges.ru 2024</span>
+                <span>itcolleges.ru - 2024</span>
             </Container>
         </footer>
     )
