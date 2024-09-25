@@ -69,7 +69,7 @@ export default function FormRegistration() {
     useEffect(() => {
         initializeTeamMembers(1)
 
-        fetch('http://api.itcolleges.ru/api/Cases/Available')
+        fetch('https://api.itcolleges.ru/api/Cases/Available')
             .then((response) => response.json())
             .then((data: Case[]) => {
                 setAvailableCases(data.filter(c => c.isAvailable))
@@ -289,7 +289,7 @@ export default function FormRegistration() {
     
             // console.log(payload)
     
-            fetch('http://api.itcolleges.ru/api/Teams/Register', {
+            fetch('https://api.itcolleges.ru/api/Teams/Register', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
