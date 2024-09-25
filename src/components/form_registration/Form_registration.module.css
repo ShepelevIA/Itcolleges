@@ -1,0 +1,107 @@
+.form {
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.wrapper_input input {
+    width: 100%;
+}
+
+.form button {
+    margin-top: 20px;
+}
+
+.wrapper_input:last-child {
+    margin-bottom: 30px;
+}
+
+.input {
+    padding: 20px;
+    height: 45px;
+    font-size: 25px;
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 30px;
+    box-sizing: border-box;
+}
+
+label {
+    display: block;
+    margin: 20px 0 5px 20px;
+}
+
+.step_one, .step_two_three_four {
+    margin: auto;
+    width: 100%;
+}
+
+.step_one {
+    max-width: 800px;
+}
+
+.step_two_three_four {
+    max-width: 1000px;
+}
+
+.step_one input, .step_one select {
+    width: 100%;
+}
+
+.input_group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; 
+}
+
+.input_group input, .input_group .input_mask, .input_group div {
+    flex: 1; 
+}
+
+.input_group input, .input_group .input_mask input .input_group div {
+    width: 100%;
+}
+
+.input_mask {
+    width: 100%;
+}
+
+.message_close_form {
+    margin: auto;
+    max-width: 1000px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.end_form {
+    font-weight: bold;
+    background: repeating-linear-gradient(45deg, 
+    rgb(213, 17, 37), 
+    rgb(213, 17, 37) 20px, 
+    rgb(1, 65, 199) 20px, 
+    rgb(1, 65, 199) 40px);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-align: center;
+
+}
+
+@media screen and (max-width: 790px) {
+    label {
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .input_group div{
+        width: 100%;
+        flex: auto;
+    } 
+
+    label {
+        font-size: 1em;
+    }
+}

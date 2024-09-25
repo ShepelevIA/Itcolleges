@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+:root {
+  font-family: 'Unbounded', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Стилизация всей полосы прокрутки */
+::-webkit-scrollbar {
+  width: 12px; /* Ширина вертикального ползунка */
+  height: 12px; /* Высота горизонтального ползунка */
+}
+
+/* Стилизация ползунка */
+::-webkit-scrollbar-thumb {
+  background-color: rgb(213, 17, 37); /* Цвет ползунка */
+  border-radius: 10px; /* Закругленные углы */
+
+}
+
+/* Стилизация области трека */
+::-webkit-scrollbar-track {
+  background-color: rgb(1, 65, 199); /* Цвет трека */
+}
+
+/* Стилизация при наведении */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(255, 0, 0); /* Цвет ползунка при наведении */
+}
+
+h1, h2 {
+  margin-bottom: 30px;
+}
+
+h2, h3{ 
+  font-weight: 600;
+}
+
+h1 {
+  font-weight: 800;
+  font-size: 45px;
+}
+
+h2 {
+  font-size: 38px;
+  text-align: center;
+}
+
+h3 {
+  font-size: 25px;
+}
+
+p {
+  font-size: 18px;
+}
+
+section {
+  padding-top: 80px;
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 35px;
+  }
+  
+  h2 {
+    font-size: 28px;
+  }
+  
+  h3 {
+    font-size: 20px;
+  }
+
+  section {
+    padding-top: 20px;
+  }
+}
+
+@media screen and (max-width: 618px) {
+  h1 {
+    font-size: 28px;
+  }
+  
+  h2 {
+    font-size: 23px;
+  }
+  
+  h3 {
+    font-size: 20px;
+  }
+}

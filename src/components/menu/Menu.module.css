@@ -1,0 +1,150 @@
+.menu {
+    display: flex;
+    position: relative;
+    z-index: 1000;
+    padding: 20px 0;
+}
+
+.logo {
+    margin-right: 20px;
+    width: 70px;
+    height: 70px;
+}
+
+.fixed_menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 20px;
+    background-color: rgb(1, 65, 199);
+    animation: menu_fixed 0.3s ease-in forwards;
+    box-sizing: border-box;
+}
+
+.progress_bar {
+    position: absolute;
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    background-color: rgb(213, 17, 37);
+    transition: width 0.1s ease-in-out;
+}
+
+@keyframes menu_fixed {
+    0% {
+        top: -100px;
+    }
+    100% {
+        top: 0;
+    }
+}
+
+.menu_list {
+    display: flex;
+    align-items: center;
+}
+
+.menu ul li {
+    margin-left: 20px;
+    list-style-type: none;
+}
+
+.menu_list li:first-child {
+    margin-left: 0;
+}
+
+.menu_list li a {
+    color: rgb(161 191 255);
+    font-size: 20px;
+    text-decoration: none;
+    transition: 0.3s all;
+}
+
+.menu_list li a:hover {
+    color: rgb(255, 255, 255);
+}
+
+.btn_mobile_menu {
+    position: relative;
+    display: none;
+    background: none;
+    border: none;
+}
+
+.open_first, .open_second, .open_third {
+    position: relative;
+}
+
+.open_first {
+    top: 15px;
+    left: 0;
+    transform: rotate(40deg);
+}
+
+.open_second {
+    left: 0;
+    transform: rotate(-40deg);
+}
+
+.open_third {
+    opacity: 0;
+}
+
+.btn_mobile_menu span {
+    display: block;
+    margin-top: 10px;
+    height: 5px;
+    background-color: rgb(255, 255, 255);
+    width: 50px;
+    border-radius: 30px;
+    transition: 0.3s all;
+}
+
+.btn_mobile_menu span:first-child {
+    margin-top: 0;
+}
+
+.btn_mobile_menu:hover span {
+    background-color: rgb(213, 17, 37);
+}
+
+@media screen and (max-width: 1024px) {
+    .menu {
+        justify-content: space-between;
+    }
+
+    .btn_mobile_menu {
+        display: block;
+        cursor: pointer;
+        z-index: 1100;
+    }
+
+    .menu_list {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 300px;
+        min-height: 100vh;
+        background-color: rgb(1, 65, 199);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.3s ease-in-out;
+    }
+
+    .menu_list.open {
+        right: 0;
+    }
+
+    .menu_list li {
+        margin-bottom: 20px;
+    }
+
+    .menu_list li a {
+        font-size: 24px;
+    }
+}

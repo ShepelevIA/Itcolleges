@@ -1,0 +1,70 @@
+.preloader_overlay {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    inset: 0;
+    background-color: rgb(255, 255, 255); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.name_brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    bottom: -10px;
+    margin-top: 40px;
+    z-index: 1;
+    font-size: 2em;
+    line-height: 0.7;
+    font-weight: bold;
+    background: repeating-linear-gradient(45deg, 
+    rgb(213, 17, 37), 
+    rgb(213, 17, 37) 20px, 
+    rgb(1, 65, 199) 20px, 
+    rgb(1, 65, 199) 40px);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.spinner {
+    margin-top: 20px;
+    height: 50px;
+    width: 50px;
+    border: 10px solid rgb(1, 65, 199);
+    border-left-color: rgb(213, 17, 37);
+    border-radius: 50%;
+    animation: spin 1s linear infinite; 
+}
+
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+.bounce_letter {
+    animation: bounce_letter 0.3s ease-in-out forwards;
+  }
+
+  @keyframes bounce_letter {
+    0%, 100% {
+      transform: translateY(0);
+      color: rgb(1, 65, 199);
+    }
+    50% {
+      transform: translateY(-20px);
+      color: rgb(213, 17, 37);
+    }
+  }
+  
+  .name_brand span {
+    display: inline-block;
+  }     
