@@ -7,8 +7,8 @@
 
 .logo {
     margin-right: 20px;
-    width: 70px;
-    height: 70px;
+    max-width: 70px;
+    width: 100%;
 }
 
 .fixed_menu {
