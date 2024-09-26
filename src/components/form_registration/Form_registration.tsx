@@ -92,10 +92,12 @@ export default function FormRegistration() {
     }
 
     const addMember = () => {
-        setFormData((prevData) => ({
-            ...prevData,
-            members: [...prevData.members, createEmptyPerson()],
-        }))
+        if (formData.members.length < 4) { 
+            setFormData((prevData) => ({
+                ...prevData,
+                members: [...prevData.members, createEmptyPerson()],
+            }))
+        }
     }
 
     const removeMember = (index: number) => {
@@ -389,7 +391,9 @@ export default function FormRegistration() {
                 return (
                     <div className={styles.step_two_three_four}>
                         <h3>Шаг 3: Введите данные участников команды</h3>
-                        <Button onClick={addMember}>Добавить участника</Button>
+                        {formData.members.length < 4 && (
+                            <Button onClick={addMember}>Добавить участника</Button>
+                        )}
                         {formData.members.map((member, index) => (
                             <div key={index}>
                                 <p>Участник {index + 1}</p>
