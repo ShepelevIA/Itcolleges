@@ -407,7 +407,7 @@ export default function FormRegistration() {
                         )}
                         {formData.members.map((member, index) => (
                             <div key={index}>
-                                <p>Участник {index + 1}</p>
+                                <p className={styles.participant}>Участник {index + 1}</p>
                                 {formData.members.length > 1 && (
                                     <Button onClick={() => removeMember(index)}>Удалить</Button>
                                 )}
