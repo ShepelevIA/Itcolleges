@@ -65,6 +65,7 @@ export default function FormRegistration() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [modalMessage, setModalMessage] = useState('')
     const [isSubmitted, setIsSubmitted] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         initializeTeamMembers(1)
@@ -230,7 +231,11 @@ export default function FormRegistration() {
 
     const handleNextStep = () => {
         if (validateStep()) {
-            setStep(step + 1)
+            setIsLoading(true)
+            setTimeout(() => {
+                setStep(step + 1)
+                setIsLoading(false)
+            }, 1000);
         } else {
             setModalMessage('Есть ошибки при заполнении формы.')
             setIsModalOpen(true)
@@ -238,7 +243,13 @@ export default function FormRegistration() {
     }
 
     const handlePrevStep = () => {
-        if (step > 1) setStep(step - 1)
+        if (step > 1) {
+            setIsLoading(true)
+        setTimeout(() => {
+            setStep(step - 1)
+            setIsLoading(false)
+        }, 1000);
+        }
     }
 
     const handleSubmit = () => {
@@ -436,24 +447,30 @@ export default function FormRegistration() {
 
     return (
         <section id="form">
-            <Container>
-                <div className={styles.form}>
-                    <h2>Форма подачи заявки</h2>
-                    {renderStepContent()}
-                    <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                        {errors.length > 0 ? (
-                            <ol>
-                                {errors.map((error, index) => (
-                                    <li key={index}>{error}</li>
-                                ))}
-                            </ol>
-                        ) : (
-                            <p>{modalMessage}</p>
-                        )}
-                    </Modal>
-                </div>
-            </Container> 
-        </section>
+        <Container>
+            <div className={styles.form}>
+                <h2>Форма подачи заявки</h2>
+                {isLoading ? (
+                    <div className={styles.preloader_form}>
+                        <div className={styles.spinner}></div>
+                    </div>
+                ) : (
+                    renderStepContent()
+                )}
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    {errors.length > 0 ? (
+                        <ol>
+                            {errors.map((error, index) => (
+                                <li key={index}>{error}</li>
+                            ))}
+                        </ol>
+                    ) : (
+                        <p>{modalMessage}</p>
+                    )}
+                </Modal>
+            </div>
+        </Container>
+    </section>
     )
 }
 

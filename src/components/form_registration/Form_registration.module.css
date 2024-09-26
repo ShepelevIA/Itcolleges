@@ -88,6 +88,30 @@ label {
 
 }
 
+.preloader_form {
+    display: flex;
+    justify-content: center;
+}
+
+.spinner {
+    margin-top: 20px;
+    height: 50px;
+    width: 50px;
+    border: 10px solid rgb(1, 65, 199);
+    border-left-color: rgb(213, 17, 37);
+    border-radius: 50%;
+    animation: spin 1s linear infinite; 
+}
+
+@keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
 @media screen and (max-width: 790px) {
     label {
         font-size: 0.8em;
