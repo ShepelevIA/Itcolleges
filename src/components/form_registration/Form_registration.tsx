@@ -319,12 +319,12 @@ export default function FormRegistration() {
                 .then(data => {
                   console.log('Success:', data)
                   setIsSubmitted(true)
-                  setModalMessage('Форма отправлена!')
+                  setModalMessage(data.message)
                   setIsModalOpen(true)
                 })
                 .catch((error) => {
                   console.error('Error:', error)
-                  setModalMessage('Произошла ошибка. Попробуйте позже!')
+                //   setModalMessage(error)
                   setIsModalOpen(true)
                 })
         } else {
@@ -520,6 +520,7 @@ function PersonForm({
                 </Tooltip>
             </div>
             <div className={styles.input_group}>
+                <Tooltip message="Номер уникальное поле (не должен повторяться)">
                 <div className={styles.input_mask}>
                     <label>Телефон</label>
                     <IMaskInput
@@ -532,6 +533,7 @@ function PersonForm({
                         className={styles.input}
                     />
                 </div>
+                </Tooltip>
                 <Input
                     label="Дата рождения"
                     type="date"
@@ -551,6 +553,7 @@ function PersonForm({
                 />
             </div>
             <div className={styles.input_group}>
+            <Tooltip message="Почта уникальное поле (не должена повторяться)">
                 <Input
                     label="Почта"
                     type="email"
@@ -559,7 +562,8 @@ function PersonForm({
                     value={personData.email}
                     onChange={(e) => handleInputChange(e, section, index)}
                 />
-                <Tooltip message="Ввод только на английском языке. Никнейм должен начинаться с @">
+                </Tooltip>
+                <Tooltip message="Никнейм уникальное поле (не должен повторяться). Ввод только на английском языке. Никнейм должен начинаться с @">
                     <Input
                         label="Никнейм в Telegram"
                         name="telegramNickname"   

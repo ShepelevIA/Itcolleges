@@ -8,9 +8,9 @@
     background-color: rgb(213, 17, 37);
     color: #fff;
     padding: 5px 10px;
-    border-radius: 30px;
+    border-radius: 10px;
     top: 0;
     left: 0;
     z-index: 1000;
-    font-size: 12px;
+    font-size: 10px;
 }
