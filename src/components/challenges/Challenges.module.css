@@ -8,7 +8,6 @@
 .cards img {
     position: relative;
     width: 100%;
-    transform: scale(1.15);
     transition: 0.3s all;
 }
 
@@ -65,4 +64,10 @@
 .btn_challenges:hover {
     background: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
+}
+
+@media screen and (max-width: 1024px) {
+    .cards img:hover {
+        transform: scale(1);
+    }
 }
