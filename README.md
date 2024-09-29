@@ -1,9 +1,13 @@
 # Itcolleges
 
-# git checkout production
-# git checkout master -- dist
-# git checkout master -- README.md 
+### Ветка production
+**git checkout production**
+**git checkout master -- dist**
+**git checkout master -- README.md** 
 
-# На хостинге а папке домена через консоль
-# git clone --branch production --single-branch git@github.com:ShepelevIA/Itcolleges.git .
-# git pull origin production 
+### На хостинге
+На хостингечерез консоль в папке домена для первого создания
+**git clone --branch production --single-branch git@github.com:ShepelevIA/Itcolleges.git .**
+
+### Обновление на хостинге
+**git pull**
