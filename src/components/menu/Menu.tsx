@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import styles from './Menu.module.css'
-import Container from '../container/Container'
 import Button from '../button/Button'
 
 export default function Menu() {
@@ -37,8 +36,8 @@ export default function Menu() {
   }
 
   return (
-    <Container>
-      <nav className={`${styles.menu} ${isFixedMenu ? styles.fixed_menu : ''}`}>
+    <div className={`${styles.container_menu}  ${isFixedMenu ? styles.fixed_menu : ''}` }>
+      <nav className={styles.menu}>
         <img className={styles.logo} src="/img/logo.svg" alt="logo.svg" />
         <Button className={styles.btn_mobile_menu} onClick={toggleMobileMenu}>
           <span className={`${isMobileMenuOpen ? styles.open_first : ''}`}></span>
@@ -63,13 +62,12 @@ export default function Menu() {
             <a href="#form">Регистрация</a>
           </li>
         </ul>
-
-        <div
+      </nav>
+      <div
           className={styles.progress_bar}
           style={{ width: `${scrollProgress}%` }}
         ></div>
-      </nav>
-    </Container>
+    </div>
   )
 }
 

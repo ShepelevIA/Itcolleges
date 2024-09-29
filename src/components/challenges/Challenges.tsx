@@ -61,7 +61,7 @@ export default function Challenges() {
                         className={styles.card_challenge} 
                         border="5px solid rgb(213, 17, 37)"
                         onClick={() => handleCardClick(
-                            'Тестирование', // Заголовок отдельно
+                            'Тестирование',
                             <div>
                                 <p>
                                     <br />
@@ -95,7 +95,7 @@ export default function Challenges() {
                         className={styles.card_challenge} 
                         border="5px solid rgb(73, 120, 219)"
                         onClick={() => handleCardClick(
-                            'Планирование траектории', // Заголовок отдельно
+                            'Планирование траектории', 
                             <div>
                                 <p>
                                     <br />

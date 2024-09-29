@@ -8,7 +8,8 @@
 }
 
 label {
-    display: block;
+    display: flex;
+    align-items: center;
     margin: 20px 0 5px 20px;
 }
 
@@ -63,3 +64,8 @@ input[type="date"] {
     }
   }
   
+  .definitely_field {
+    margin-left: 5px;
+    color: rgb(213, 17, 37);
+    font-size: 35px;
+  }

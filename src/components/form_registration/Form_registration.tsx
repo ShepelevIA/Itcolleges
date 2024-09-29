@@ -61,11 +61,17 @@ export default function FormRegistration() {
         mentor: createEmptyPerson(),
     })
 
-    const [errors, setErrors] = useState<string[]>([])
+    const [errors, setErrors] = useState<{ captain: string[], members: string[][], mentor: string[] }>({
+        captain: [],
+        members: [],
+        mentor: []
+    })
+
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [modalMessage, setModalMessage] = useState('')
+    const [modalMessage, setModalMessage] = useState<string>('')
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [modalHeading, setModalHeading] = useState<string>('')
 
     useEffect(() => {
         initializeTeamMembers(1)
@@ -181,63 +187,72 @@ export default function FormRegistration() {
     }
 
     const validateStep = () => {
-        let newErrors: string[] = []
-
+        const newErrors: { captain: string[], members: string[][], mentor: string[] } = {
+            captain: [],
+            members: [],
+            mentor: []
+        }
+    
         if (step === 1) {
             if (!formData.teamName.trim()) {
-                newErrors.push('Название команды обязательно')
+                newErrors.captain.push('Название команды - обязательное поле')
             }
             if (!formData.case.trim()) {
-                newErrors.push('Кейс обязателен')
+                newErrors.captain.push('Кейс - обязательное поле')
             }
         }
     
         if (step === 2) {
             Object.entries(formData.captain).forEach(([key, value]) => {
                 const label = fieldLabels[key] || key
-                if (!value.trim()) newErrors.push(`Капитан: ${label} обязательно`)
+                if (!value.trim()) newErrors.captain.push(`${label} - обязательное поле`)
                 if (key === 'email' && !validateEmail(value)) {
-                    newErrors.push(`Капитан: Неверный формат ${label.toLowerCase()}`)
+                    newErrors.captain.push(`${label.toLowerCase()} - неверный формат`)
                 }
             })
         }
     
         if (step === 3) {
-            formData.members.forEach((member, index) => {
+            formData.members.forEach((member) => {
+                const memberErrors: string[] = []
                 Object.entries(member).forEach(([key, value]) => {
                     const label = fieldLabels[key] || key
-                    if (!value.trim()) newErrors.push(`Участник ${index + 1}: ${label} обязательно`)
+                    if (!value.trim()) memberErrors.push(`${label} обязательное поле`)
                     if (key === 'email' && !validateEmail(value)) {
-                        newErrors.push(`Участник ${index + 1}: Неверный формат ${label.toLowerCase()}`)
+                        memberErrors.push(`Неверный формат ${label.toLowerCase()}`)
                     }
                 })
+                if (memberErrors.length > 0) {
+                    newErrors.members.push(memberErrors)
+                }
             })
         }
     
         if (step === 4) {
             Object.entries(formData.mentor).forEach(([key, value]) => {
                 const label = fieldLabels[key] || key
-                if (!value.trim()) newErrors.push(`Наставник: ${label} обязательно`)
+                if (!value.trim()) newErrors.mentor.push(`${label} обязательное поле`)
                 if (key === 'email' && !validateEmail(value)) {
-                    newErrors.push(`Наставник: Неверный формат ${label.toLowerCase()}`)
+                    newErrors.mentor.push(`Неверный формат ${label.toLowerCase()}`)
                 }
             })
         }
     
         setErrors(newErrors)
-        return newErrors.length === 0
+        return newErrors.captain.length === 0 && newErrors.members.length === 0 && newErrors.mentor.length === 0
     }
     
-
+    
     const handleNextStep = () => {
         if (validateStep()) {
             setIsLoading(true)
             setTimeout(() => {
                 setStep(step + 1)
                 setIsLoading(false)
-            }, 1000);
+                setModalHeading('') 
+            }, 1000)
         } else {
-            setModalMessage('Есть ошибки при заполнении формы.')
+            setModalHeading('Ошибки при заполнении')
             setIsModalOpen(true)
         }
     }
@@ -248,7 +263,7 @@ export default function FormRegistration() {
         setTimeout(() => {
             setStep(step - 1)
             setIsLoading(false)
-        }, 1000);
+        }, 1000)
         }
     }
 
@@ -282,7 +297,7 @@ export default function FormRegistration() {
                         telegramNickname: member.telegramNickname,
                         educationalInstitution: member.educationalInstitution,
                         specialty: member.specialty,
-                        statusId: 2, 
+                        statusId: 2,
                     })),
                     {
                         lastName: formData.mentor.lastName,
@@ -300,8 +315,6 @@ export default function FormRegistration() {
                 ],
             }
     
-            // console.log(payload)
-    
             fetch('https://api.itcolleges.ru/api/Teams/Register', {
                 method: 'POST',
                 headers: {
@@ -311,28 +324,36 @@ export default function FormRegistration() {
               })
                 .then(async response => {
                   const data = await response.json()
-                  if (!response.ok) {
-                    throw new Error(data.message || 'Something went wrong')
+    
+                  if (!response.ok) {    
+                    setModalHeading(data.message)
+                    setModalMessage(data.innerException)
+                    setIsModalOpen(true)
+                    return
                   }
                   return data
                 })
                 .then(data => {
-                  console.log('Success:', data)
-                  setIsSubmitted(true)
-                  setModalMessage(data.message)
-                  setIsModalOpen(true)
+                  if (data) {
+                    // console.log('Success:', data)
+                    setIsSubmitted(true)
+                    setModalHeading('Регистрация завершена')
+                    setModalMessage(data.message || 'Команда успешно зарегистрирована.')
+                    setIsModalOpen(true)
+                  }
                 })
                 .catch((error) => {
-                  console.error('Error:', error)
-                //   setModalMessage(error)
+                  console.error('Error:', error.message)
+                  setModalHeading('Ошибка при отправке')
+                  setModalMessage(error.message || 'Произошла ошибка при регистрации команды.')
                   setIsModalOpen(true)
                 })
         } else {
+            setModalHeading('Ошибки при заполнении') 
             setModalMessage('Есть ошибки при заполнении формы.')
             setIsModalOpen(true)
         }
-    }
-    
+    }    
 
     const renderStepContent = () => {
         if (isSubmitted) {
@@ -357,15 +378,20 @@ export default function FormRegistration() {
                 return (
                     <div className={styles.step_one}>
                         <h3>Шаг 1: Введите название команды и выберите кейс</h3>
-                        <Input
-                            label="Название Команды"
-                            name="teamName"
-                            placeholder="Введите название команды"
-                            value={formData.teamName}
-                            onChange={(e) => handleInputChange(e)}
-                        />
+                        <Tooltip message="Название Комады может быть как на русском, так и на английском языке.">
+                            <Input
+                                label="Название Команды"
+                                definitely_field={true}
+                                name="teamName"
+                                placeholder="Teams name"
+                                value={formData.teamName}
+                                onChange={(e) => handleInputChange(e)}
+                            />
+                        </Tooltip>
+                        <Tooltip message="Кейсы обезательное поле">
                         <Select
                             label="Кейс"
+                            definitely_field={true}
                             name="case"
                             value={formData.case}
                             onChange={(e) => handleInputChange(e)}
@@ -377,6 +403,7 @@ export default function FormRegistration() {
                                 </option>
                             ))}
                         </Select>
+                        </Tooltip>
                         <div className={styles.btn_form_control}>
                             <Button onClick={handleNextStep}>Далее</Button>
                         </div>
@@ -402,9 +429,6 @@ export default function FormRegistration() {
                 return (
                     <div className={styles.step_two_three_four}>
                         <h3>Шаг 3: Введите данные участников команды</h3>
-                        {formData.members.length < 4 && (
-                            <Button onClick={addMember}>Добавить участника</Button>
-                        )}
                         {formData.members.map((member, index) => (
                             <div key={index}>
                                 <p className={styles.participant}>Участник {index + 1}</p>
@@ -420,7 +444,11 @@ export default function FormRegistration() {
                                 />
                             </div>
                         ))}
+
                         <div className={styles.btn_form_control}>
+                            {formData.members.length < 4 && (
+                                <Button onClick={addMember}>Добавить участника</Button>
+                            )}
                             <Button onClick={handlePrevStep}>Назад</Button>
                             <Button onClick={handleNextStep}>Далее</Button>
                         </div>
@@ -457,14 +485,46 @@ export default function FormRegistration() {
                 ) : (
                     renderStepContent()
                 )}
-                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    {errors.length > 0 ? (
-                        <ol>
-                            {errors.map((error, index) => (
-                                <li key={index}>{error}</li>
-                            ))}
-                        </ol>
-                    ) : (
+                <Modal heading={modalHeading} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    {Object.keys(errors).length > 0 && (
+                        <>
+                            {errors.captain.length > 0 && (
+                                <>
+                                    <h3>Капитан:</h3>
+                                    <ol>
+                                        {errors.captain.map((error, index) => (
+                                            <li key={index}>{error}</li>
+                                        ))}
+                                    </ol>
+                                </>
+                            )}
+                            {errors.members.length > 0 && (
+                                <>
+                                    {errors.members.map((memberErrors, index) => (
+                                        <div key={index}>
+                                            <h3>Участник {index + 1}:</h3>
+                                            <ol>
+                                                {memberErrors.map((error, errorIndex) => (
+                                                    <li key={errorIndex}>{error}</li>
+                                                ))}
+                                            </ol>
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+                            {errors.mentor.length > 0 && (
+                                <>
+                                    <h3>Наставник:</h3>
+                                    <ol>
+                                        {errors.mentor.map((error, index) => (
+                                            <li key={index}>{error}</li>
+                                        ))}
+                                    </ol>
+                                </>
+                            )}
+                        </>
+                    ) }
+                    {modalMessage && (
                         <p>{modalMessage}</p>
                     )}
                 </Modal>
@@ -494,8 +554,9 @@ function PersonForm({
                 <Tooltip message="Ввод только на русском языке">
                     <Input
                         label="Фамилия"
+                        definitely_field={true}
                         name="lastName"
-                        placeholder="Введите фамилию"
+                        placeholder="Иванов"
                         value={personData.lastName}
                         onChange={(e) => handleInputChange(e, section, index)}
                     />
@@ -503,8 +564,9 @@ function PersonForm({
                 <Tooltip message="Ввод только на русском языке">
                     <Input
                         label="Имя"
+                        definitely_field={true}
                         name="firstName"
-                        placeholder="Введите Имя"
+                        placeholder="Иван"
                         value={personData.firstName}
                         onChange={(e) => handleInputChange(e, section, index)}
                     />
@@ -512,8 +574,9 @@ function PersonForm({
                 <Tooltip message="Ввод только на русском языке">
                     <Input
                         label="Отчество"
+                        definitely_field={true}
                         name="middleName"
-                        placeholder="Введите Отчество"
+                        placeholder="Иванович"
                         value={personData.middleName}
                         onChange={(e) => handleInputChange(e, section, index)}
                     />
@@ -522,7 +585,10 @@ function PersonForm({
             <div className={styles.input_group}>
                 <Tooltip message="Номер уникальное поле (не должен повторяться)">
                 <div className={styles.input_mask}>
-                    <label>Телефон</label>
+                    <label>
+                        Телефон 
+                        <span className={styles.definitely_field}>*</span>
+                    </label>
                     <IMaskInput
                         mask="+7(000) 000-00-00"
                         value={personData.phoneNumber}   
@@ -534,28 +600,40 @@ function PersonForm({
                     />
                 </div>
                 </Tooltip>
-                <Input
-                    label="Дата рождения"
-                    type="date"
-                    name="dateOfBirth"
-                    placeholder="Введите дату рождения"
-                    value={personData.dateOfBirth}
-                    onChange={(e) => handleInputChange(e, section, index)}
-                />
-                <Input
-                    label="Возраст"
-                    type="number"
-                    name="age"
-                    placeholder="Введите возраст"
-                    value={personData.age}
-                    onChange={(e) => handleInputChange(e, section, index)}
-                    min={0}
-                />
+                <Tooltip message="Дата обезательное поле">
+                <div className={styles.input_mask}>
+                    <label>
+                        Дата рождения
+                        <span className={styles.definitely_field}>*</span>
+                    </label>
+                    <IMaskInput
+                        mask="00.00.0000"
+                        value={personData.dateOfBirth}
+                        onAccept={(value: string) => handleInputChange({ target: { name: 'dateOfBirth', value } } as any, section, index)}
+                        name="dateOfBirth"
+                        placeholder="ДД.ММ.ГГГГ"
+                        className={styles.input}
+                    />
+                </div>
+                </Tooltip>
+                <Tooltip message="Возраст обезательное поле">
+                    <Input
+                        label="Возраст"
+                        definitely_field={true}
+                        type="number"
+                        name="age"
+                        placeholder="16 и больше"
+                        value={personData.age}
+                        onChange={(e) => handleInputChange(e, section, index)}
+                        min={16}
+                    />
+                </Tooltip>
             </div>
             <div className={styles.input_group}>
             <Tooltip message="Почта уникальное поле (не должена повторяться)">
                 <Input
                     label="Почта"
+                    definitely_field={true}
                     type="email"
                     name="email"
                     placeholder="example@mail.com"
@@ -566,8 +644,9 @@ function PersonForm({
                 <Tooltip message="Никнейм уникальное поле (не должен повторяться). Ввод только на английском языке. Никнейм должен начинаться с @">
                     <Input
                         label="Никнейм в Telegram"
+                        definitely_field={true}
                         name="telegramNickname"   
-                        placeholder="Введите никнейм"
+                        placeholder="@telegram_nickname"
                         value={personData.telegramNickname}   
                         onChange={(e) => handleInputChange(e, section, index)}
                         className={styles.input}
@@ -578,8 +657,9 @@ function PersonForm({
                 <Tooltip message="Ввод только на русском языке">
                     <Input
                         label="Учебное заведение"
+                        definitely_field={true}
                         name="educationalInstitution"
-                        placeholder="Введите учебное заведение"
+                        placeholder="ГБПОУ МГКЭИТ"
                         value={personData.educationalInstitution}
                         onChange={(e) => handleInputChange(e, section, index)}
                     />
@@ -587,8 +667,9 @@ function PersonForm({
                 <Tooltip message="Ввод только на русском языке">
                     <Input
                         label="Специальность по направлению IT"
+                        definitely_field={true}
                         name="specialty"  
-                        placeholder="Введите специальность по направлению"
+                        placeholder="09.02.07 «Информационные системы и программирование»"
                         value={personData.specialty}  
                         onChange={(e) => handleInputChange(e, section, index)}
                     />

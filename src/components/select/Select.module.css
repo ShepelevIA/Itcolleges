@@ -5,11 +5,10 @@
     border: 3px solid rgb(0, 0, 0);
     border-radius: 30px;
     box-sizing: border-box;
-
     appearance: none;
     -webkit-appearance: none; 
     -moz-appearance: none; 
-
+    color: rgb(140, 140, 140);
    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5H7z%22%20fill%3D%22%23000%22/%3E%3C/svg%3E');
    background-repeat: no-repeat;
    background-position: right 20px center;
@@ -18,8 +17,23 @@
    padding-right: 40px;
 }
 
+.select:focus {
+    color: black;
+}
+
+.select option:not(:first-child) {
+    color: black;
+}
+
 .label_select {
-    display: block;
+    display: flex;
+    align-items: center;
     margin: 20px 0 5px 20px;
 }
+
+.definitely_field {
+    margin-left: 5px;
+    color: rgb(213, 17, 37);
+    font-size: 35px;
+  }
 

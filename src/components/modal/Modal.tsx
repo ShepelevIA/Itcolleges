@@ -5,10 +5,11 @@ interface ModalProps {
     isOpen: boolean
     children: React.ReactNode,
     heading?: string,
+    className?: string,
     onClose: () => void
 }
 
-export default function Modal({ isOpen, children, onClose, heading }: ModalProps) {
+export default function Modal({ isOpen, children, onClose, heading, className }: ModalProps) {
     const [isClosing, setIsClosing] = useState(false)
 
     useEffect(() => {
@@ -34,7 +35,7 @@ export default function Modal({ isOpen, children, onClose, heading }: ModalProps
     if (!isOpen && !isClosing) return null
 
     return (
-        <div className={`${styles.modal_overlay} ${isClosing ? styles.fade_out : styles.fade_in}`} onClick={handleClose}>
+        <div className={`${styles.modal_overlay} ${isClosing ? styles.fade_out : styles.fade_in} ${className && className}`} onClick={handleClose}>
             <div
                 className={`${styles.modal} ${isClosing ? styles.modal_hide : styles.modal_show}`}
                 onClick={(e) => e.stopPropagation()}

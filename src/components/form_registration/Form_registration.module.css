@@ -26,7 +26,8 @@
 }
 
 label {
-    display: block;
+    display: flex;
+    align-items: center;
     margin: 20px 0 5px 20px;
 }
 
@@ -35,8 +36,13 @@ label {
     width: 100%;
 }
 
+
 .step_one {
     max-width: 800px;
+}
+
+.step_one div {
+    width: 100%;
 }
 
 .step_two_three_four {
@@ -103,6 +109,20 @@ label {
     animation: spin 1s linear infinite; 
 }
 
+.btn_form_control button{
+    margin-left: 10px;
+}
+
+.btn_form_control button:first-child {
+    margin-left: 0;
+}
+
+.definitely_field {
+    margin-left: 5px;
+    color: rgb(213, 17, 37);
+    font-size: 35px;
+  }
+
 @keyframes spin {
     0% {
       transform: rotate(0deg);
@@ -116,6 +136,10 @@ label {
     margin-top: 30px;
     padding: 20px 0;
     border-top: 4px solid rgb(1, 65, 199);
+}
+
+.model_form ol li span {
+    font-weight: 800;
 }
 
 @media screen and (max-width: 790px) {

@@ -6,13 +6,17 @@ interface SelectProps extends DetailedHTMLProps<SelectHTMLAttributes<HTMLSelectE
     value?: string | number,
     onChange?: (e: ChangeEvent<HTMLSelectElement>) => void,
     disabled?: boolean,
-    name?: string
+    name?: string,
+    definitely_field?: boolean
 }
 
-export default function Select({ children, name, label, value, onChange, disabled }: SelectProps) {
+export default function Select({ children, name, label, value, definitely_field, onChange, disabled }: SelectProps) {
     return (
         <div className={styles.wrapper_select}>
-            {label && <label className={styles.label_select}>{label}</label>}
+            {label && <label className={styles.label_select}>
+                {label}
+                {definitely_field && <span className={styles.definitely_field}>*</span>}
+            </label>}
             <div className={styles.selectContainer}>
                 <select
                     name={name}
