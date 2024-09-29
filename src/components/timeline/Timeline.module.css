@@ -20,14 +20,20 @@
     color: transparent;
 }
 
+.timeline_animate:first-child {
+    width: 40%;
+}
+
+.timeline_animate:last-child {
+    width: 60%;
+}
+
 .wrapper_when {
     position: relative;
     display: flex;
-
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 20px;
-    width: 40%;
     box-sizing: border-box;
 }
 
@@ -91,7 +97,6 @@
 .wrapper_where {
     display: flex;
     align-items: flex-end;
-    width: 60%;
     border-radius: 30px;
     background-image: url('/img/building.svg');
     background-size: 100% 100%;
@@ -134,12 +139,10 @@
         font-weight: 800;
         width: 45%;
     }
-    .wrapper_when {
+    .timeline_animate:first-child, .timeline_animate:last-child  {
         width: 100%;
     }
-    .wrapper_where {
-        width: 100%;
-    }
+    
 }
 
 @media screen and (max-width: 768px) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 
 interface Basic_animate_elementProps {
     children: React.ReactNode
-    direction?: 'top' | 'left' | 'bottom' | 'right'
+    direction?: 'top' | 'left' | 'bottom' | 'right' | 'flip-x' | 'flip-y' | 'zoom-in' | 'zoom-out' | 'bounce' | 'spin' | 'pulse'
     offset?: number 
     className?: string 
 }
@@ -10,7 +10,7 @@ interface Basic_animate_elementProps {
 export default function Basic_animate_element({
     children,
     direction,
-    offset, 
+    offset = 100, // Значение по умолчанию для смещения
     className,
 }: Basic_animate_elementProps) {
     const [isVisible, setIsVisible] = useState(false)
@@ -41,7 +41,6 @@ export default function Basic_animate_element({
         }
     }, [])
 
-
     const getTransformStyle = () => {
         if (!direction) return '' 
 
@@ -54,6 +53,20 @@ export default function Basic_animate_element({
                 return `translateX(-${offset}px)`
             case 'right':
                 return `translateX(${offset}px)`
+            case 'flip-x':
+                return `rotateX(90deg)` // Переворот по оси X
+            case 'flip-y':
+                return `rotateY(90deg)` // Переворот по оси Y
+            case 'zoom-in':
+                return `scale(0.5)` // Уменьшение элемента с последующим увеличением
+            case 'zoom-out':
+                return `scale(1.5)` // Увеличение элемента с последующим уменьшением
+            case 'bounce':
+                return `translateY(-${offset}px) scale(1.1)` // Элемент подпрыгивает и слегка увеличивается
+            case 'spin':
+                return `rotateX(360deg)` // Полный оборот элемента
+            case 'pulse':
+                return `scale(1.2)` // Пульсация (увеличение)
             default:
                 return ''
         }
@@ -66,7 +79,9 @@ export default function Basic_animate_element({
             style={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? 'translate(0, 0)' : getTransformStyle(),
-                transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
+                transition: isVisible
+                    ? 'opacity 0.8s ease-out, transform 0.8s ease-out'
+                    : 'opacity 0.3s ease-out, transform 0.3s ease-out',
             }}
         >
             {children}

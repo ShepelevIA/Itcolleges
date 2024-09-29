@@ -7,7 +7,8 @@ import Select from '../select/Select'
 import Button from '../button/Button'
 import Modal from '../modal/Modal'
 import Tooltip from '../tooltip/Tooltip'
-
+import Basic_animate_element from '../animate/basic_animate_element/Basic_animate_element'
+ 
 interface Person {
     lastName: string
     firstName: string
@@ -376,6 +377,7 @@ export default function FormRegistration() {
         switch (step) {
             case 1:
                 return (
+                    <Basic_animate_element direction="zoom-in" offset={100}>
                     <div className={styles.step_one}>
                         <h3>Шаг 1: Введите название команды и выберите кейс</h3>
                         <Tooltip message="Название Комады может быть как на русском, так и на английском языке.">
@@ -408,25 +410,29 @@ export default function FormRegistration() {
                             <Button onClick={handleNextStep}>Далее</Button>
                         </div>
                     </div>
+                    </Basic_animate_element>
                 )
             case 2:
                 return (
-                    <div className={styles.step_two_three_four}>
-                        <h3>Шаг 2: Введите данные капитана команды</h3>
-                        <PersonForm
-                            personData={formData.captain}
-                            section="captain"
-                            handleInputChange={handleInputChange}
-                            validateEmail={validateEmail}
-                        />
-                        <div className={styles.btn_form_control}>
-                            <Button onClick={handlePrevStep}>Назад</Button>
-                            <Button onClick={handleNextStep}>Далее</Button>
+                    <Basic_animate_element direction="flip-y" offset={100}>
+                        <div className={styles.step_two_three_four}>
+                            <h3>Шаг 2: Введите данные капитана команды</h3>
+                            <PersonForm
+                                personData={formData.captain}
+                                section="captain"
+                                handleInputChange={handleInputChange}
+                                validateEmail={validateEmail}
+                            />
+                            <div className={styles.btn_form_control}>
+                                <Button onClick={handlePrevStep}>Назад</Button>
+                                <Button onClick={handleNextStep}>Далее</Button>
+                            </div>
                         </div>
-                    </div>
+                    </Basic_animate_element>
                 )
             case 3:
                 return (
+                    <Basic_animate_element direction="flip-y" offset={100}>
                     <div className={styles.step_two_three_four}>
                         <h3>Шаг 3: Введите данные участников команды</h3>
                         {formData.members.map((member, index) => (
@@ -453,9 +459,11 @@ export default function FormRegistration() {
                             <Button onClick={handleNextStep}>Далее</Button>
                         </div>
                     </div>
+                    </Basic_animate_element>
                 )
             case 4:
                 return (
+                    <Basic_animate_element direction="flip-y" offset={100}>
                     <div className={styles.step_two_three_four}>
                         <h3>Шаг 4: Введите данные наставника</h3>
                         <PersonForm
@@ -469,6 +477,7 @@ export default function FormRegistration() {
                             <Button onClick={handleSubmit}>Отправить заявку</Button>
                         </div>
                     </div>
+                    </Basic_animate_element>
                 )
         }
     }
