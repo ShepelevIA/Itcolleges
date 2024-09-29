@@ -4,18 +4,5 @@
     z-index: 1;
     overflow: hidden;
     border-radius: 30px;
-    width: 30%;
     box-sizing: border-box;
-}
-
-@media screen and (max-width: 1024px) {
-    .card {
-        width: 48%;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .card {
-        width: 100%;
-    }
 }

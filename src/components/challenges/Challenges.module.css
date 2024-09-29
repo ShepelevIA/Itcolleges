@@ -1,3 +1,4 @@
+
 .cards {
     display: flex;
     flex-wrap: wrap;
@@ -15,15 +16,15 @@
     transform: scale(1.3);
 }
 
-.cards .card_challenge:nth-of-type(1) .card_content {
+.cards .card_animate:nth-of-type(1) .card_challenge .card_content {
     background-color: rgb(1, 65, 199); 
 }
 
-.cards .card_challenge:nth-of-type(2) .card_content {
+.cards .card_animate:nth-of-type(2) .card_challenge .card_content {
     background-color: rgb(213, 17, 37);
 }
 
-.cards .card_challenge:nth-of-type(3) .card_content {
+.cards .card_animate:nth-of-type(3) .card_challenge .card_content {
     background-color: rgb(73, 120, 219);
 }
 
@@ -43,6 +44,10 @@
     font-weight: 800;
     color: rgb(255, 255, 255);
 }
+
+.card_animate {
+    width: 30%;
+} 
 
 .btn_challenges {
     position: absolute;
@@ -67,7 +72,16 @@
 }
 
 @media screen and (max-width: 1024px) {
-    .cards img:hover {
+    .card_animate {
+        width: 48%;
+    }
+    .card_animate img:hover {
         transform: scale(1);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card_animate {
+        width: 100%;
     }
 }

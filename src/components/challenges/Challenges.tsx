@@ -4,6 +4,7 @@ import Container from '../container/Container'
 import Card from '../cards/Card'
 import Modal from '../modal/Modal'
 import Button from '../button/Button'
+import Basic_animate_element from '../animate/basic_animate_element/Basic_animate_element'
 
 export default function Challenges() {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -27,7 +28,8 @@ export default function Challenges() {
             <Container>
                 <h2>Кейсы хакатона</h2>
                 <div className={styles.cards}>
-                    <Card 
+                <Basic_animate_element className={styles.card_animate} direction="bottom" offset={200}>
+                    <Card
                         className={styles.card_challenge} 
                         border="5px solid rgb(1, 65, 199)"
                         onClick={() => handleCardClick(
@@ -56,7 +58,8 @@ export default function Challenges() {
                         </div>
                         <img src="/img/motion_control_system.svg" alt="motion_control_system" />
                     </Card>
-
+                </Basic_animate_element>
+                <Basic_animate_element className={styles.card_animate} direction="bottom" offset={200}>
                     <Card 
                         className={styles.card_challenge} 
                         border="5px solid rgb(213, 17, 37)"
@@ -90,7 +93,8 @@ export default function Challenges() {
                         </div>
                         <img src="/img/testing.svg" alt="testing" />
                     </Card>
-
+                    </Basic_animate_element>
+                    <Basic_animate_element className={styles.card_animate} direction="bottom" offset={200}>
                     <Card 
                         className={styles.card_challenge} 
                         border="5px solid rgb(73, 120, 219)"
@@ -119,7 +123,8 @@ export default function Challenges() {
                             <Button className={styles.btn_challenges}>Подробнее</Button>
                         </div>
                         <img src="/img/path_planning.svg" alt="path_planning" />
-                    </Card>                                         
+                    </Card> 
+                    </Basic_animate_element>                                       
                 </div>
                 <br />
                 <br />
