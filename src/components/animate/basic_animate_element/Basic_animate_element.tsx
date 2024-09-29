@@ -54,19 +54,19 @@ export default function Basic_animate_element({
             case 'right':
                 return `translateX(${offset}px)`
             case 'flip-x':
-                return `rotateX(90deg)` // Переворот по оси X
+                return `rotateX(90deg)`
             case 'flip-y':
-                return `rotateY(90deg)` // Переворот по оси Y
+                return `rotateY(90deg)` 
             case 'zoom-in':
-                return `scale(0.5)` // Уменьшение элемента с последующим увеличением
+                return `scale(0.5)` 
             case 'zoom-out':
-                return `scale(1.5)` // Увеличение элемента с последующим уменьшением
+                return `scale(1.5)` 
             case 'bounce':
-                return `translateY(-${offset}px) scale(1.1)` // Элемент подпрыгивает и слегка увеличивается
+                return `translateY(-${offset}px) scale(1.1)` 
             case 'spin':
-                return `rotateX(360deg)` // Полный оборот элемента
+                return `rotateX(360deg)` 
             case 'pulse':
-                return `scale(1.2)` // Пульсация (увеличение)
+                return `scale(1.2)` 
             default:
                 return ''
         }

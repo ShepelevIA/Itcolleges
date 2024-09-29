@@ -385,7 +385,7 @@ export default function FormRegistration() {
                                 label="Название Команды"
                                 definitely_field={true}
                                 name="teamName"
-                                placeholder="Teams name"
+                                placeholder="Team name"
                                 value={formData.teamName}
                                 onChange={(e) => handleInputChange(e)}
                             />
