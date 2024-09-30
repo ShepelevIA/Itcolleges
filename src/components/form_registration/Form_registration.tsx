@@ -268,8 +268,54 @@ export default function FormRegistration() {
         }
     }
 
+
+    const checkFieldUniqueness = (field: 'phoneNumber' | 'email' | 'telegramNickname') => {
+        const allPeople = [
+            { role: 'Капитан', person: formData.captain },
+            ...formData.members.map((member, index) => ({ role: `Участник ${index + 1}`, person: member })),
+            { role: 'Наставник', person: formData.mentor },
+        ]
+    
+        const errors: string[] = []
+        for (let i = 0; i < allPeople.length; i++) {
+            for (let j = i + 1; j < allPeople.length; j++) {
+                if (allPeople[i].person[field] === allPeople[j].person[field] && allPeople[i].person[field]) {
+                    errors.push(`${allPeople[j].role} совпадает ${fieldLabels[field]} с ${allPeople[i].role}`)
+                }
+            }
+        }
+        return errors
+    }
+
     const handleSubmit = () => {
         if (validateStep()) {
+
+            const phoneErrors = checkFieldUniqueness('phoneNumber')
+            const emailErrors = checkFieldUniqueness('email')
+            const telegramErrors = checkFieldUniqueness('telegramNickname')
+
+            if (phoneErrors.length || emailErrors.length || telegramErrors.length) {
+                setErrors({
+                    captain: [],
+                    members: [],
+                    mentor: [],
+                })
+            
+                setModalHeading('Ошибки при заполнении')
+            
+                const errorMessages = `
+                    <ul>
+                        ${phoneErrors.map(error => `<li>${error}</li>`).join('')}
+                        ${emailErrors.map(error => `<li>${error}</li>`).join('')}
+                        ${telegramErrors.map(error => `<li>${error}</li>`).join('')}
+                    </ul>
+                `
+            
+                setModalMessage(errorMessages)
+                setIsModalOpen(true)
+                return
+            }
+
             const payload = {
                 teamName: formData.teamName,
                 caseId: parseInt(formData.case, 10),
@@ -339,19 +385,18 @@ export default function FormRegistration() {
                     // console.log('Success:', data)
                     setIsSubmitted(true)
                     setModalHeading('Регистрация завершена')
-                    setModalMessage(data.message || 'Команда успешно зарегистрирована.')
+                    setModalMessage(data.message)
                     setIsModalOpen(true)
                   }
                 })
                 .catch((error) => {
                   console.error('Error:', error.message)
                   setModalHeading('Ошибка при отправке')
-                  setModalMessage(error.message || 'Произошла ошибка при регистрации команды.')
+                  setModalMessage(error.message)
                   setIsModalOpen(true)
                 })
         } else {
-            setModalHeading('Ошибки при заполнении') 
-            setModalMessage('Есть ошибки при заполнении формы.')
+            setModalHeading('Ошибки при заполнении')
             setIsModalOpen(true)
         }
     }    
@@ -534,7 +579,7 @@ export default function FormRegistration() {
                         </>
                     ) }
                     {modalMessage && (
-                        <p>{modalMessage}</p>
+                        <div dangerouslySetInnerHTML={{ __html: modalMessage }} />
                     )}
                 </Modal>
             </div>

@@ -23,6 +23,7 @@ export const PreloaderProvider = ({ children }: { children: ReactNode }) => {
 
             setTimeout(() => {
                 setLoading(false)
+                document.body.removeAttribute('style')
             }, 2000) 
         }
 
@@ -30,6 +31,7 @@ export const PreloaderProvider = ({ children }: { children: ReactNode }) => {
             handleLoad()
         } else {
             window.addEventListener('load', handleLoad) 
+            document.body.style.overflow = 'hidden'
         }
 
         return () => {

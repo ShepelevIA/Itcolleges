@@ -5,12 +5,6 @@ import styles from './Preloader.module.css'
 export default function Preloader() {
     const { loading } = usePreloader()
 
-    if (loading) {
-      document.body.style.overflow = 'hidden'
-  } else {
-      document.body.style.overflow = 'auto'
-  }
-
     useEffect(() => {
         if (!loading) return
 
